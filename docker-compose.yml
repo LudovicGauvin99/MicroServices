@@ -1,0 +1,26 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile  # Spécifiez le Dockerfile pour le frontend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./frontend:/app
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile  # Spécifiez le Dockerfile pour le backend
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - frontend
+
+  database:
+    image: sqlite
+    volumes:
+      - ./database:/var/lib/sqlite
